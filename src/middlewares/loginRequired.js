@@ -4,7 +4,7 @@ const User = require('../models/Users.js')
 
 const validToken = async(req,res,next) => {
     const { authorization } = req.headers;
-
+    console.log(authorization);
     if(!authorization) {
         return res.status(401).json({
             errors: ['Login Required'],
@@ -14,7 +14,7 @@ const validToken = async(req,res,next) => {
     const [, token] = authorization.split(' ');
 
     try {
-        const datas = jwt.verify(token, process.env.TOKEN_SCRET);
+        const datas = jwt.verify(token, process.env.TOKEN_SECRET);
         const { id, email } = datas;
 
         const user = await User.findOne({
@@ -31,7 +31,8 @@ const validToken = async(req,res,next) => {
             });
         }
 
-        req.actualUser = user;
+        req.userId = id;
+        req.userEmail = email;
         return next();
 
     } catch(error) {
