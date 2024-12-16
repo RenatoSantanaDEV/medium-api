@@ -1,0 +1,13 @@
+------------BackEnd------------
+
+Criar usuario -> ok
+Fazer login -> ok
+Criar publicações -> not ok
+Atualizar publicações -> not ok
+Remover publicações -> not ok
+Listar publicações -> not ok
+Like nas publicações -> not ok
+Deslike nas publicações -> not ok
+
+------------FrontEnd------------
+nada -> ok
