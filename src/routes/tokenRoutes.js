@@ -3,6 +3,6 @@ const TokenController = require('../controllers/TokenController.js');
 
 const router = new Router();
 
-router.post('/', TokenController.store);
+router.post('/', TokenController.storeToken);
 
 module.exports = router;
