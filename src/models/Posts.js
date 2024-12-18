@@ -1,6 +1,6 @@
 const { Model, Sequelize } = require('sequelize');
 
-class Post extends Model {
+Class Post extends Model {
   static init(sequelize) {
     super.init({
       user_id: {
