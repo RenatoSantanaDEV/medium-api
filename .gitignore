@@ -1,8 +1,9 @@
 .env
-node_moduloes/
+node_modules
 yarn.lock
-nodemon.json/
-package-lock.json/
-package.json/
+nodemon.json
+package-lock.json
+package.json
 .sequelizerc
-seeders
+seedersnode_modules
+node_modules/
