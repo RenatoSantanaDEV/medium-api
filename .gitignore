@@ -7,3 +7,6 @@ package.json
 .sequelizerc
 seedersnode_modules
 node_modules/
+nodemon.json/
+package-lock.json/
+package.json/
