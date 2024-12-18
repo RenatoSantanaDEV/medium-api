@@ -1,42 +1,20 @@
-const User = require('../models/Users.js');
-const jwt = require('jsonwebtoken');
+const tokenService = require('../services/tokenService.js');
+const BaseController = require('./BaseController.js');
 
-class TokenController {
-    async store(req, res) {
-        try {
-            const { email = '', password = '' } = req.body;
-            if(!email || !password){
-                return res.status(401).json({
-                    errors: ['Invalid Data'],
-                });
-            }
+class TokenService extends BaseController {
+    constructor(){
+        super();
+        this.storeToken = this.storeToken.bind(this);
+    }
+    async storeToken(req, res) {
+      try {
+        const newToken = await tokenService.storeToken(req.body);
+        this.handleResponse(res, newToken);
+    } catch (e) {
+        this.handleError(res, 'ERROR')
 
-            const user = await User.findOne({ where: { email } });
-
-            if(!user){
-                return res.status(401).json({
-                    errors: ['Invalid user'],
-                });
-            }
-
-            if(!(await user.passwordIsValid(password))){
-                return res.status(401).json({
-                    errors: ['Invalid Password'],
-                });
-            }
-            const { id } = user;
-            const token =  jwt.sign({ id, email }, process.env.TOKEN_SECRET, {
-                expiresIn: process.env.TOKEN_EXPIRATION,
-            })
-            res.json({ "token": token });
-
-
-        } catch(error) {
-            res.status(400).json({
-                errors: error.errors.map(err => err.message)
-            });
         }
     }
 }
 
-module.exports = new TokenController();
+module.exports = new TokenService();

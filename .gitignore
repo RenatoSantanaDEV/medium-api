@@ -1,0 +1,8 @@
+.env
+node_moduloes
+yarn.lock
+nodemon.json
+package-lock.json
+package.json
+.sequelizerc
+seeders
