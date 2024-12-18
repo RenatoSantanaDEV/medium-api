@@ -18,4 +18,6 @@ class UserController extends BaseController {
     }
 }
 
+// alteraçao com vai no pr
+
 module.exports = new UserController();
