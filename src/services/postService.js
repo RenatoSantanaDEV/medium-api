@@ -5,7 +5,7 @@ const Like = require('../models/Likes.js');
 class PostService {
     async storePost(body) {
         try {
-            const { user_id ,title, text, summary, postLikes, post_date } = body;
+            const { user_id , title, text, summary, postLikes, post_date } = body;
 
             const IDuser = await User.findByPk(user_id);
 
@@ -18,7 +18,7 @@ class PostService {
                 title,
                 text,
                 summary,
-                post_likes: postLikes || 0,
+                post_likes: 0,
                 post_date: new Date(post_date),
             });
     
@@ -69,7 +69,7 @@ class PostService {
                 title: title || post.title,
                 text: text || post.text,
                 summary: summary || post.summary,
-                post_likes: postLikes !== undefined ? postLikes : post.postLikes,
+                post_likes: post.postLikes,
                 post_date: post_date ? new Date(post_date) : post.post_date,
             });
 
