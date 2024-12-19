@@ -6,30 +6,28 @@ class TokenController {
         try {
             const { email = '', password = '' } = body;
 
-            if(!email || !password){
+            if (!email || !password) {
                 throw new Error('Email ou Senha não existe.');
             }
 
             const user = await User.findOne({ where: { email } });
 
-            if(!user){
+            if (!user) {
                 throw new Error('Usuário não existe.');
             }
 
-            if(!(await user.passwordIsValid(password))){
+            if (!(await user.passwordIsValid(password))) {
                 throw new Error('Senha inválida.');
             }
-            
+
             const { id } = user;
 
-            const token =  jwt.sign({ id, email }, process.env.TOKEN_SECRET, {
+            const token = jwt.sign({ id, email }, process.env.TOKEN_SECRET, {
                 expiresIn: process.env.TOKEN_EXPIRATION,
-            })
+            });
 
-            return { "token": token };
-
-
-        } catch(error) {
+            return { token: token };
+        } catch (error) {
             return { error: error.message };
         }
     }

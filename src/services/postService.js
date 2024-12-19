@@ -5,11 +5,12 @@ const Like = require('../models/Likes.js');
 class PostService {
     async storePost(body) {
         try {
-            const { user_id , title, text, summary, postLikes, post_date } = body;
+            const { user_id, title, text, summary, postLikes, post_date } =
+                body;
 
             const IDuser = await User.findByPk(user_id);
 
-            if(!IDuser) {
+            if (!IDuser) {
                 throw new Error('Usuário não existe.');
             }
 
@@ -21,24 +22,30 @@ class PostService {
                 post_likes: 0,
                 post_date: new Date(post_date),
             });
-    
+
             return newPost;
-        } catch(error) {
+        } catch (error) {
             return { error: error.message };
         }
     }
-    
 
     async indexPost() {
         try {
             const posts = await Post.findAll({
-                attributes: ['id', 'user_id', 'text', 'title', 'post_likes', 'post_date'],
+                attributes: [
+                    'id',
+                    'user_id',
+                    'text',
+                    'title',
+                    'post_likes',
+                    'post_date',
+                ],
                 where: { deleted_at: null },
-                raw: true
+                raw: true,
             });
 
             return posts;
-        } catch(error) {
+        } catch (error) {
             return { error: error.message };
         }
     }
@@ -47,18 +54,19 @@ class PostService {
         try {
             const { id } = params;
 
-            if(!id) {
+            if (!id) {
                 throw new Error('ID do post é obrigatório.');
             }
-            
-            const { user_id ,title, text, summary, postLikes, post_date } = body;
+
+            const { user_id, title, text, summary, postLikes, post_date } =
+                body;
 
             const IDuser = await User.findByPk(user_id);
 
-            if(!IDuser) {
+            if (!IDuser) {
                 throw new Error('Usuário não existe.');
             }
-            
+
             const post = await Post.findByPk(id);
 
             if (!post) {
@@ -74,7 +82,6 @@ class PostService {
             });
 
             return post;
-
         } catch (error) {
             return { error: error.message };
         }
@@ -89,44 +96,43 @@ class PostService {
             }
 
             const post = await Post.findByPk(id);
-    
+
             if (!post) {
                 throw new Error('Post não encontrado.');
             }
-    
+
             await post.destroy();
             console.log(`Post com ID ${id} deletado com sucesso.`);
-    
+
             return { message: 'Post deletado com sucesso.' };
-            
         } catch (error) {
             return { error: error.message };
         }
     }
-    
+
     async storeLike(params, body) {
         try {
             const { id } = params;
 
-            if(!id){ 
+            if (!id) {
                 throw new Error('ID do post é obrigatório.');
             }
-            
+
             const post = await Post.findByPk(id);
-            
+
             if (!post) {
                 throw new Error('Post não encontrado.');
             }
 
             const { user_id } = body;
 
-            if(!user_id){
+            if (!user_id) {
                 throw new Error('User_id não existe.');
             }
 
             const IDuser = await User.findByPk(user_id);
 
-            if(!IDuser) {
+            if (!IDuser) {
                 throw new Error('Usuário não existe.');
             }
 
@@ -137,11 +143,10 @@ class PostService {
                 },
             });
 
-            
             if (existingLike) {
                 throw new Error('Você já curtiu este post.');
             }
-            
+
             const newLike = await Like.create({
                 post_id: id,
                 user_id: user_id,
@@ -150,36 +155,32 @@ class PostService {
             await this.updateLike(id);
 
             return newLike;
-
-        } catch(error) {
+        } catch (error) {
             return { error: error.message };
         }
     }
 
     async updateLike(post_id) {
-        try{
-            
+        try {
             const totalLikes = await Like.count({
                 where: { post_id },
-              });
+            });
 
-              console.log(totalLikes, 'totalLikes');
+            console.log(totalLikes, 'totalLikes');
 
-              const post = await Post.findByPk(post_id);
+            const post = await Post.findByPk(post_id);
 
-              if (!post) {
+            if (!post) {
                 throw new Error('Post não encontrado.');
             }
 
             await post.update({ post_likes: totalLikes });
-            
-            return post;
 
-        } catch(error) {
+            return post;
+        } catch (error) {
             return { error: error.message };
         }
     }
-    
 }
 
 module.exports = new PostService();

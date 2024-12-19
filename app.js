@@ -8,8 +8,8 @@ dotenv.config();
 
 require('./src/database');
 
-class App{
-    constructor(){
+class App {
+    constructor() {
         this.app = express();
         this.middlewares();
         this.routes();

@@ -12,7 +12,7 @@ class UserService {
             });
 
             return newUser;
-        } catch(error) {
+        } catch (error) {
             return { error: error.message };
         }
     }

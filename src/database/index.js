@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const databaseConfig = require('../config/database.js');
+
 const User = require('../models/Users.js');
 const Post = require('../models/Posts.js');
 const Like = require('../models/Likes.js');
