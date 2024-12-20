@@ -14,24 +14,23 @@ const validToken = async(req,res,next) => {
     const [, token] = authorization.split(' ');
 
     try {
-        const datas = jwt.verify(token, process.env.TOKEN_SCRET);
-        const { id, email } = datas;
-
+        const datas = jwt.verify(token, process.env.TOKEN_SECRET);
+        const { id } = datas;
+        
         const user = await User.findOne({
             where: {
                 id,
-                email,
             },
             raw: true,
         });
-
+        
         if(!user) {
             return res.status(401).json({
                 errors: ['User invalid or expired'],
             });
         }
-
-        req.actualUser = user;
+        
+        req.userId = id;
         return next();
 
     } catch(error) {
