@@ -4,7 +4,6 @@ const User = require('../models/Users.js')
 
 const validToken = async(req,res,next) => {
     const { authorization } = req.headers;
-
     if(!authorization) {
         return res.status(401).json({
             errors: ['Login Required'],
