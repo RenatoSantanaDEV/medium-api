@@ -1,6 +1,57 @@
-class PostController {
-    async store(req,res) {
-        req.json('Index');
+const postService = require('../services/postService.js');
+const BaseController = require('./BaseController.js');
+
+class PostController extends BaseController {
+    constructor() {
+        super();
+        this.indexPost = this.indexPost.bind(this);
+        this.storePost = this.storePost.bind(this);
+        this.deletePost = this.deletePost.bind(this);
+        this.updatePost = this.updatePost.bind(this);
+    }
+
+    async indexPost(req, res) {
+        try {
+            const posts = await postService.indexPost();
+            this.handleResponse(res, posts);
+        } catch (e) {
+            this.handleError(res, 'ERROR');
+        }
+    }
+
+    async storePost(req, res) {
+        try {
+            const data = req.body
+            const newPost = await postService.storePost(data);
+            this.handleResponse(res, newPost);
+        } catch (e) {
+            this.handleError(res, 'ERROR');
+        }
+    }
+
+    async deletePost(req, res) {
+        try {
+            const { id } = req.params
+            const post = await postService.deletePost(id);
+            this.handleResponse(res, post);
+        } catch (e) {
+            this.handleError(res, 'ERROR');
+        }
+    }
+
+    async updatePost(req, res) {
+        try {
+            const { id } = req.params;
+            const data = req.body;
+
+            const updatePost = await postService.updatePost(
+                id,
+                data
+            );
+            this.handleResponse(res, updatePost);
+        } catch (e) {
+            this.handleError(res, 'ERROR');
+        }
     }
 }
 
