@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 const express = require('express');
 const userRoutes = require('./src/routes/userRoutes.js');
 const tokenRoutes = require('./src/routes/tokenRoutes.js');
+const thumbnailRoutes = require('./src/routes/thumbanilRoutes.js');
 const postRoutes = require('./src/routes/postRoutes.js');
 const cors = require('cors');
 
@@ -17,13 +18,16 @@ class App{
     }
     middlewares() {
         this.app.use(cors());
-        this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.json());
+        this.app.use(express.json({ limit: "100mb" }));
+        this.app.use(express.text({ limit: "100mb" }));
+        this.app.use(express.urlencoded({ limit: "100mb", extended: true }));
     }
     routes() {
         this.app.use('/users', userRoutes);
         this.app.use('/tokens', tokenRoutes);
         this.app.use('/posts', postRoutes);
+        this.app.use('/thumbnails', thumbnailRoutes);
     }
 }
 

@@ -1,10 +1,9 @@
-
 module.exports = {
   async up(queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.createTable(
-        'users',
+        'thumbnails',
         {
           id: {
             type: Sequelize.INTEGER,
@@ -12,19 +11,21 @@ module.exports = {
             autoIncrement: true,
             primaryKey: true,
           },
-          username: {
+          originalname: {
             type: Sequelize.STRING,
             allowNull: false,
-            unique: true,
           },
-          email: {
+          filename: {
             type: Sequelize.STRING,
             allowNull: false,
-            unique: true,
           },
-          password_hash: {
-            type: Sequelize.STRING,
-            allowNull: false,
+          post_id: {
+            type: Sequelize.INTEGER,
+            allowNull: true,
+            references: {
+              model: 'posts',
+              key: 'id',
+            },
           },
           created_at: {
             type: Sequelize.DATE,
@@ -33,10 +34,6 @@ module.exports = {
           updated_at: {
             type: Sequelize.DATE,
             allowNull: false,
-          },
-          deleted_at: {
-            type: Sequelize.DATE,
-            allowNull: true,
           },
         },
         { transaction }
@@ -52,7 +49,7 @@ module.exports = {
   async down(queryInterface) {
     const transaction = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.dropTable('users', { transaction });
+      await queryInterface.dropTable('thumbnails', { transaction });
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();

@@ -1,6 +1,6 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const transaction = await queryInterface.sequelize.transaction(); 
+    const transaction = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.createTable(
         'posts',

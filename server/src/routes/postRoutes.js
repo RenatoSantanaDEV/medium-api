@@ -9,12 +9,7 @@ const LikeController = require('../controllers/LikeController.js');
 const router = new Router();
 const schemaValidator = new SchemaValidator();
 
-router.post(
-    '/',
-    schemaValidator.validate(postSchema.storePost),
-    validToken,
-    postController.storePost
-);
+router.post('/',schemaValidator.validate(postSchema.storePost),validToken,postController.storePost);
 
 router.put(
     '/:id',
