@@ -1,47 +1,46 @@
-const { extname, resolve } = require("path");
-const multer = require("multer");
+const { resolve } = require("path");
 const fs = require("fs");
-const multerConfig = require("../config/multerConfig");
-
-const upload = multer(multerConfig).single("img");
 
 module.exports = {
   create(req, res, next) {
-    return upload(req, res, async (err) => {
-      const { img, thumbnailName } = req.body;
+    try {
+      const { img, filename } = req.body;
 
-      let imagemReq = thumbnailName;
+      const imgPrefix = img.split(",")[0];
+      let originalname;
 
-      if (img.substring(11, 14) === "jpeg") {
-        imagemReq = img.replace(/^data:image\/jpg;base64,/, "");
+      if (imgPrefix.includes("jpeg")) {
+        originalname = img.replace(/^data:image\/jpeg;base64,/, "");
+      } else if (imgPrefix.includes("jpg")) {
+        originalname = img.replace(/^data:image\/jpg;base64,/, "");
+      } else if (imgPrefix.includes("png")) {
+        originalname = img.replace(/^data:image\/png;base64,/, "");
+      } else {
+        return res
+          .status(400)
+          .json({ errors: ["Formato de imagem não suportado."] });
       }
 
-      if (img.substring(11, 14) === "jpg") {
-        imagemReq = img.replace(/^data:image\/jpeg;base64,/, "");
-      }
+      const filePath = resolve(
+        __dirname,
+        "..",
+        "..",
+        "..",
+        "client",
+        "public",
+        "assets",
+        "thumbnails",
+        filename
+      );
 
-      if (img.substring(11, 14) === "png") {
-        imagemReq = img.replace(/^data:image\/png;base64,/, "");
-      }
+      fs.writeFileSync(filePath, originalname, "base64");
 
-      const filename = thumbnailName;
-
-      const filePath = resolve(__dirname, '..', '..', '..', 'client', 'public','assets', 'thumbnails', `${filename}`);
-
-      req.body = { thumbnailName, thumbnailName };
-
-      fs.writeFileSync(filePath, imagemReq, "base64", (error) => {
-        if (error) {
-          return res.json(error);
-        }
-        return "";
-      });
-
-      if (err) {
-        return res.status(400).json({ errors: [err] });
-      }
-
-      return next();
-    });
+      req.body = { filename, originalname };
+      next();
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ errors: ["Erro ao processar a imagem.", error.message] });
+    }
   },
 };

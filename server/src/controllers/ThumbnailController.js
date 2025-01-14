@@ -1,4 +1,4 @@
-const thumbanilService = require('../services/thumbanilService.js');
+const thumbnailService = require('../services/thumbnailService.js');
 const BaseController = require('./BaseController.js');
 
 class ThumbanilController extends BaseController {
@@ -9,8 +9,9 @@ class ThumbanilController extends BaseController {
 
     async storeThumbnail(req, res) {
         try {
-            const data = req.body
-            const newThumbnail = await thumbanilService.storeThumbnail(data);
+            const data = req.body;
+            const { id } = req.params;
+            const newThumbnail = await thumbnailService.storeThumbnail(data, id);
             this.handleResponse(res, newThumbnail);
         } catch (e) {
             this.handleError(res, 'ERROR');

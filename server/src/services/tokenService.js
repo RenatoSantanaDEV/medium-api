@@ -26,7 +26,10 @@ class TokenController {
                 expiresIn: process.env.TOKEN_EXPIRATION,
             })
 
-            return { "token": token };
+            return {
+                id,
+                token
+            };
 
 
         } catch(error) {

@@ -5,7 +5,7 @@ class BaseController {
     }
 
     handleError(res, error){
-      return res.status(500).json({ error: error.message })
+      return res.json({ error: error.message })
     }
   };
 

@@ -3,8 +3,9 @@ const databaseConfig = require('../config/database.js');
 const User = require('../models/Users.js');
 const Post = require('../models/Posts.js');
 const Like = require('../models/Likes.js');
+const Thumbnail = require('../models/Thumbnails.js');
 
-const models = [User, Post, Like];
+const models = [User, Post, Like, Thumbnail];
 
 const connection = new Sequelize(databaseConfig);
 

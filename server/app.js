@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 const express = require('express');
 const userRoutes = require('./src/routes/userRoutes.js');
 const tokenRoutes = require('./src/routes/tokenRoutes.js');
-const thumbnailRoutes = require('./src/routes/thumbanilRoutes.js');
+const thumbnailRoutes = require('./src/routes/thumbnailRoutes.js');
 const postRoutes = require('./src/routes/postRoutes.js');
 const cors = require('cors');
 

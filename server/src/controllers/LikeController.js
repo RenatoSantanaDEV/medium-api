@@ -11,9 +11,9 @@ class LikeController extends BaseController {
     async like(req, res) {
         try {
             const { id } = req.params;
-            const { email } = req.body;
+            const { user_id } = req.body;
 
-            const like = await likeService.like(id, email);
+            const like = await likeService.like(id, user_id);
             this.handleResponse(res, like);
         } catch (e) {
             this.handleError(res, 'ERROR');

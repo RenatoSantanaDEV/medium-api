@@ -1,6 +1,6 @@
 const { Model, Sequelize } = require('sequelize');
 
-class Thumbanil extends Model {
+class Thumbnail extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -23,18 +23,17 @@ class Thumbanil extends Model {
             allowNull: false,
         },
     }, {
-        tableName: 'post_likes',
-        modelName: 'Likes',
+        tableName: 'thumbnails',
+        modelName: 'Thumbnail',
         sequelize,
         timestamps: true,
-        paranoid: true
       }
     );
   }
 
   static associate(models) {
-    Thumbanil.belongsTo(models.Post, {foreignKey: 'post_id' });
+    Thumbnail.belongsTo(models.Post, {foreignKey: 'post_id', as: 'postThumbnail' });
   }
 }
 
-module.exports = Thumbanil;
+module.exports = Thumbnail;

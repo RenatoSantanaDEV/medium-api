@@ -1,11 +1,11 @@
 const Post = require('../models/Posts.js');
+const Thumbnail = require('../models/Thumbnails.js');
 const User = require('../models/Users.js');
 
 class PostService {
     async storePost(data) {
         try {
-            const { user_id, title, text, summary, postLikes, post_date } =
-                data;
+            const { user_id, title, text, summary, postLikes, post_date } = data;
 
             const newPost = await Post.create({
                 user_id,
@@ -27,7 +27,6 @@ class PostService {
             const posts = await Post.findAll({
                 attributes: [
                     'id',
-                    'user_id',
                     'text',
                     'title',
                     'post_likes',
@@ -39,7 +38,13 @@ class PostService {
                     as: 'user',
                     model: User,
                     attributes: ['username']
-                }]
+                }, {
+                    as: 'postThumbnail',
+                    model: Thumbnail,
+                    attributes: ['filename']
+                }],
+                raw: true,
+                nest: true
             });
 
             return posts;
@@ -61,7 +66,6 @@ class PostService {
                 },
                 attributes: [
                     'id',
-                    'user_id',
                     'text',
                     'title',
                     'post_likes',
@@ -72,6 +76,10 @@ class PostService {
                     as: 'user',
                     model: User,
                     attributes: ['username']
+                }, {
+                    as: 'postThumbnail',
+                    model: Thumbnail,
+                    attributes: ['filename']
                 }]
             });
 
@@ -79,6 +87,38 @@ class PostService {
                 throw new Error('Post não encontrado.');
             }
 
+            return post;
+        } catch (error) {
+            return { error: error.message };
+        }
+    }
+    async showUserPosts(user_id) {
+        try {
+            const post = await Post.findAll({
+                where: {
+                    user_id,
+                    deleted_at: null
+                },
+                attributes: [
+                    'id',
+                    'title',
+                    'text',
+                    'summary',
+                    'post_likes',
+                    'post_date'
+                ],
+                include: [{
+                    as: 'user',
+                    model: User,
+                    attributes: ['username']
+                }, {
+                    as: 'postThumbnail',
+                    model: Thumbnail,
+                    attributes: ['filename']
+                }]
+            });
+
+            console.log(post, 'posts')
             return post;
         } catch (error) {
             return { error: error.message };
@@ -129,7 +169,6 @@ class PostService {
             }
 
             await post.destroy();
-            console.log(`Post com ID ${id} deletado com sucesso.`);
 
             return { message: 'Post deletado com sucesso.' };
         } catch (error) {

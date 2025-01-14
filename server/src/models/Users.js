@@ -38,8 +38,6 @@ class User extends Model {
   }
 
   static associate(models) {
-    console.log(models, 'models')
-
     User.hasMany(models.Likes, {foreignKey: 'user_id' });
     User.hasMany(models.Post, {foreignKey: 'user_id' });
   }

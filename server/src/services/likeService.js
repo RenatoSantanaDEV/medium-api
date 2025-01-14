@@ -3,7 +3,7 @@ const Like = require('../models/Likes.js');
 const User = require('../models/Users.js');
 
 class LikeService {
-    async like(post_id, email) {
+    async like(post_id, user_id) {
         try {
             const post = await Post.findByPk(post_id);
 
@@ -11,31 +11,20 @@ class LikeService {
                 throw new Error('Post não encontrado.');
             }
 
-            const user = await User.findOne({
-                where: { email }
-            });
+            const user = await User.findByPk(user_id);
 
             if (!user) {
                 throw new Error('Usuário não encontrado.');
             }
 
-            const user_id = user.id;
 
-            const hasLike = await Like.findOne({
-                where: {
-                    post_id,
-                    user_id
-                }
-            });
+            const hasLike = await Like.findOne({ where: {post_id,user_id} });
 
             if (hasLike) {
-                return this.dislike(post_id, email);
+                return this.dislike(post_id, user_id);
             }
 
-            await Like.create({
-                post_id,
-                user_id,
-            });
+            await Like.create({post_id,user_id,});
 
             await post.increment('post_likes', { by: 1 });
 
@@ -45,7 +34,7 @@ class LikeService {
         }
     }
 
-    async dislike(post_id, email) {
+    async dislike(post_id, user_id) {
         try {
             const post = await Post.findByPk(post_id);
 
@@ -53,15 +42,11 @@ class LikeService {
                 throw new Error('Post não encontrado.');
             }
 
-            const user = await User.findOne({
-                where: { email }
-            });
+            const user = await User.findByPk(user_id);
 
             if (!user) {
                 throw new Error('Usuário não encontrado.');
             }
-
-            const user_id = user.id;
 
             const hasLike = await Like.findOne({
                 where: {

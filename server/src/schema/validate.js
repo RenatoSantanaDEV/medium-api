@@ -1,26 +1,33 @@
 class SchemaValidator {
-    validate(schema) {
-      return async (req, res, next) => {
-        const requestData = (req.body && Object.keys(req?.body).length || req?.file && Object.keys(req?.file).length)
+  validate(schema) {
+    return async (req, res, next) => {
+      try {
+        if (req.file && schema.file) {
+          req.data = await schema.file.validate(req.file);
 
-        try {
-          req.data = requestData
-          ? (!schema.body ? await schema.file.validate(req.file) : await schema.body.validate(req.body)) : null
-
-          req.filter = req.params && Object.keys(req?.params).length
-            ? await schema.params.validate(req.params) : null;
-
-          req.filter = req.query && Object.keys(req?.query).length ? {
-            ...req.filter, ...(await schema.query.validate(req.query)),
-          } : req.filter;
-
-          return next();
-        } catch (err) {
-          return res.status(401).json({ error: err.message });
+        } else if (req.body && schema.body) {
+          req.data = await schema.body.validate(req.body);
         }
-      };
 
-    }
+        if (req.params && schema.params) {
+          req.filter = await schema.params.validate(req.params);
+        }
+
+        if (req.query && schema.query) {
+          req.filter = {
+            ...(req.filter || {}),
+            ...(await schema.query.validate(req.query)),
+          };
+        }
+
+        return next();
+      } catch (err) {
+        return res.status(400).json({
+          error: err.errors ? err.errors.join(', ') : err.message,
+        });
+      }
+    };
   }
+}
 
 module.exports = SchemaValidator;

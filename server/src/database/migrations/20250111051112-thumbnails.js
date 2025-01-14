@@ -11,6 +11,16 @@ module.exports = {
             autoIncrement: true,
             primaryKey: true,
           },
+          post_id: {
+            type: Sequelize.INTEGER,
+            allowNull: true,
+            references: {
+              model: 'users',
+              key: 'id',
+              onUpdate: 'CASCADE',
+              onDelete: 'CASCADE',
+            },
+          },
           originalname: {
             type: Sequelize.STRING,
             allowNull: false,
@@ -18,14 +28,6 @@ module.exports = {
           filename: {
             type: Sequelize.STRING,
             allowNull: false,
-          },
-          post_id: {
-            type: Sequelize.INTEGER,
-            allowNull: true,
-            references: {
-              model: 'posts',
-              key: 'id',
-            },
           },
           created_at: {
             type: Sequelize.DATE,

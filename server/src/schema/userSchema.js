@@ -8,6 +8,11 @@ const schema = {
             password: yup.string().required(),
             confirmPassword: yup.string(255).required().oneOf([yup.ref('password'), null], 'Senha não é a mesma')
         }).noUnknown(),
+    },
+    showUser: {
+        body: yup.object().shape({
+            email: yup.string().email(),
+        }).noUnknown(),
     }
 }
 
