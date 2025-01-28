@@ -1,0 +1,105 @@
+<header class="doca-flex" id="header">
+    <div id="logo-search">
+        <img
+            src="assets/images/amigo.png"
+            alt="Logo Amigo"
+            class="doca-w-1/5 doca-ml-5"
+            style="cursor: pointer;"
+            ui-sref="home"
+        />
+
+        <div class="doca-form doca-flex doca-items-center" id="search-bar">
+            <div
+                class="doca-form-control__icon-container doca-form-control__icon-container--left doca-items-center doca-flex"
+                id="container-search-bar"
+            >
+                <i class="doca-icon doca-icon__search"></i>
+                <input
+                    class="doca-form-control doca-text--large"
+                    id="search-box"
+                    placeholder="Search"
+                    ng-model="searchQuery"
+                    typeahead="result for result in formatResults($viewValue)"
+                    typeahead-template-url="customTemplate.html"
+                    typeahead-on-select="onSelect(result)"
+                    typeahead-min-length="2"
+                />
+            </div>
+        </div>
+    </div>
+    <div class="doca-flex doca-mr-5" id="post-notification-profile">
+        <button
+            class="doca-button doca-button--large doca-button--tertiary"
+            id="pen-square"
+            ng-click="createPost()"
+            ui-sref="new-story"
+        >
+            <i class="doca-icon doca-icon__pen-to-square doca-icon--light"></i>
+            <p class="doca-text--large">Write</p>
+        </button>
+
+        <button class="doca-button doca-button doca-button--tertiary" id="bell" style="margin-left: 0px;">
+            <i class="doca-icon doca-icon__bell doca-icon--light"></i>
+        </button>
+
+        <button class="doca-button doca-button doca-button--tertiary" id="profile" ng-click="toggleDropdown()" style="font-size: 22px; margin-left: 0px;">
+            <i class="doca-icon doca-icon__circle-user doca-icon--light"></i>
+        </button>
+
+        <div class="doca-dropdown-menu nav-dropdown-list-new" ng-show="isDropdownVisible">
+            <ul class="doca-dropdown__list">
+                <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action" ui-sref="profile">
+                    <i class="fa-thin fa-user-pen"></i>
+                    Profile
+                </li>
+                <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                    <i class="fa-thin fa-bookmark"></i>
+                    Libary
+                </li>
+                <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                    <i class="fa-sharp fa-thin fa-memo"></i>
+                    Stories
+                </li>
+
+                <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                    <i class="fa-sharp fa-thin fa-chart-simple"></i>
+                    Stats
+                </li>
+                <hr
+                class="doca-separator"
+                style="border-color: rgba(77, 77, 77, 0.061); width: 100%;"
+                />
+                <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                    Settings
+                </li>
+                <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                    Refine recommendations
+                </li>
+                <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                    Manage publications
+                </li>
+                <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                    Help
+                </li>
+                <hr
+                class="doca-separator"
+                style="border-color: rgba(77, 77, 77, 0.061); width: 100%;"
+                />
+                <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">Become a Medium member <i class="fa-duotone fa-solid fa-star-christmas" style="font-size: 12px; margin-left: 25px; margin-right: 15px; color: rgb(255, 217, 0);"></i></li>
+                <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">Create a Mastodon account</li>
+                <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">Apply for author verification</li>
+                <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">Apply to the Partner Program</li>
+                <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">Gift a membership</li>
+                <hr
+                class="doca-separator"
+                style="border-color: rgba(77, 77, 77, 0.061); width: 100%;"
+                />
+                <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action" ng-click="logOut()">
+                    Sign out
+                <li class="doca-dropdown__list__item" id="email-masked">
+                    <span id="email-masked">{{getMaskedEmail(email)}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>

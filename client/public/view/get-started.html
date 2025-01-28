@@ -1,0 +1,90 @@
+<head><title>Get started - Amigo Medium</title></head>
+
+<div ng-show="loading">
+    <span class="loader"></span>
+</div>
+
+<div class="doca-flex colored" ng-if="!loading">
+    <header class="doca-flex" style="display: flex; position: fixed; border-bottom: 1px solid black; width: 100%;" id="header">
+        <div class="doca-icon" style="margin: 0 350px;">
+            <img src="assets/images/amigo.png" alt="Logo Amigo" style="width: 150px; cursor: pointer;"/>
+        </div>
+        <div style="display: inline-block; margin-right: 300px;" >
+            <button class="itens-menu doca-button">Our Story</button>
+            <button class="doca-button itens-menu ">Membership</button>
+            <button class="doca-button itens-menu " ng-click="openModalRegister()" >Write</button>
+            <button class="doca-button itens-menu " ng-click="openModalSignIn()">Sign in</button>
+            <button class="active doca-button itens-menu " ng-click="openModalRegister()" >Get Started</button>
+        </div>
+    </header>
+    <div class="colored" style="height: 100%; width: 100%; display: flex;" id="hero">
+        <div class="doca-flex colored" id="hero-content">
+            <h1 style="font-size: 120px;">Human</h1>
+            <h1>stories <span style="font-size: 100px; font-family: gt-super">&</span> ideas</h1>
+            <p>A place to read, write, and deepen your understanding</p>
+            <button class="active-bigger" style="margin-top: 20px;" ng-click="openModalRegister()">Start reading</button>
+        </div>
+        <div id="hero-image"> <img src="assets/images/medium-imagem-token.jpeg" alt=""></div>
+    </div>
+    <div class="colored doca-flex" style="width: 100%;">
+        <div style="border-top: 1px solid #000000;">
+            <div class="footer" style="display: flex;">
+                <p class="doca-button">Help</p>
+                <p class="doca-button">Status</p>
+                <p class="doca-button">Abaout</p>
+                <p class="doca-button">Careers</p>
+                <p class="doca-button">Press</p>
+                <p class="doca-button">Blog</p>
+                <p class="doca-button">Privacy</p>
+                <p class="doca-button">Terms</p>
+                <p class="doca-button">Text to speech</p>
+                <p class="doca-button">Teams</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+
+    <div class="modal" ng-show="isModalSignInVisible">
+        <div class="modal-content">
+            <span class="close-btn" ng-click="closeSignInModal()">&times;</span>
+            <h1 style="font-family: 'gt-super';">Welcome back.</h1>
+            <p style="margin-bottom: 40px; margin-top: 20px;">Enter the email address associated with your account.</p>
+
+            <form ng-submit="login()">
+                <div class="doca-flex" style="display: inline-grid; gap: 5%;" >
+                    <p style="margin: 0px;">Your email</p>
+                    <input class="input-token" type="email" ng-model="user.email" required>
+                    <p style="margin: 0px;">Your password</p>
+                    <input class="input-token" type="password" ng-model="user.password" required>
+                    <p style="font-size: 16px; margin-top: 10px;">No account? <a ng-click="openModalRegister()" style="font-size: 14px; color: green; cursor: pointer;">Create one</a></p>
+                    <button class="active-token" type="submit">Continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" ng-show="isModalRegisterVisible">
+        <div class="modal-content" style="height: 650px">
+            <span class="close-btn" ng-click="closeRegisterModal()">&times;</span>
+            <h1 style="font-family: 'gt-super';">Join Medium.</h1>
+            <p style="margin-bottom: 40px; margin-top: 20px;">Enter the email address associated with your account.</p>
+
+            <form ng-submit="create()">
+                <div class="doca-flex" style="display: inline-grid; gap: 5%;" >
+                    <p style="margin: 0px;">Your name</p>
+                    <input class="input-token" type="text" ng-model="user.username" ng-minlength="3"
+                    required>
+                    <p style="margin: 0px;">Your email</p>
+                    <input class="input-token" type="email" ng-model="user.email" ng-minlength="10" required>
+                    <p style="margin: 0px;">Your password</p>
+                    <input class="input-token" type="password" ng-model="user.password" ng-minlength="6" required>
+                    <p style="margin: 0px;">Confirm your password</p>
+                    <input class="input-token" type="password" ng-model="user.confirmPassword" required>
+                    <p style="font-size: 16px; margin-top: 10px;">Already have an account? <a ng-click="openModalSignIn()" style="font-size: 14px; color: green; cursor: pointer;">Sign in</a></p>
+                    <button class="active-token" type="submit" ng-disabled="!user.username || !user.email || !user.password || !user.confirmPassword || (user.password !== user.confirmPassword)" style="cursor: pointer;">Continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

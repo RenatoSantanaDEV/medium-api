@@ -1,0 +1,105 @@
+<head><title>Amigo Medium</title></head>
+<div ng-show="loading">
+    <span class="loader"></span>
+</div>
+
+<div class="doca" ng-if="!loading">
+    <custom-header user-id="user_id"></custom-header>
+
+    <div class="doca-w-1/2 doca-mx-auto" id="foryou">
+        <div class="doca-flex">
+            <div class="doca-flex">
+                <button
+                    class="doca-button doca-button--large doca-button--tertiary"
+                >
+                    <i
+                        class="doca-icon doca-icon__plus doca-icon--extra-large"
+                    ></i>
+                </button>
+                <button
+                    style="font-size: 13px; cursor: auto;"
+                >
+                    For you
+                </button>
+                <hr id="tab-active" />
+                <button
+                    class="doca-button doca-button--large doca-button--tertiary"
+                    style="font-size: 13px"
+                >
+                    Following
+                </button>
+            </div>
+        </div>
+
+        <div class="doca-flex" style="gap: 0%; margin-bottom: 40px; width: 750px;">
+            <hr
+                class="doca-separator doca-w-full"
+                style="border-color: rgba(77, 77, 77, 0.061)"
+            />
+        </div>
+
+        <div class="doca-flex doca-w-1/2" style="gap: 0%; margin-right: 0px;">
+            <div ng-if="posts.length" class="" style="cursor: pointer; width: 100%;">
+                <div class="doca-flex doca-flex-col doca-mx-auto" style="margin-bottom: 20px; gap: 0%; width: 750px;" ng-repeat="post in posts" ui-sref="post({ id: post.id })">
+                    <div style="display: flex; width: 100%;">
+                        <i class="doca-icon doca-icon__circle-user doca-icon--solid doca-icon--large doca-mt-1" style="margin-right: 5px; font-size: 20px;"></i>
+                        <p class="doca-card__title doca-text--normal doca-text--large doca-justify-start" style="font-size: 12px;">
+                            {{ post.user.username }}
+                        </p>
+                    </div>
+					<div class="doca-flex doca-mt-4 doca-justify-between doca-items-start doca-h-auto" style="width: 100%;">
+					<div style="width: 100%">
+                            <h2 class="doca-card__title doca-text--normal doca-text--extra-large doca-mb-8" style="font-size: 22px; line-height: 30px">
+                                {{ post.title }}
+							</h2>
+                            <p class="doca-card__subtitle doca-mb-8 doca-text--normal doca-text--large">
+                                {{ post.summary }}
+                            </p>
+                            <div class="doca-flex">
+                                <div class="doca-flex doca-items-center">
+                                    <p class="doca-text--normal doca-text--large">
+                                        {{ post.post_date | date:'MMM d, yyyy' }}
+                                    </p>
+                                    <div class="doca-ml-2 doca-flex">
+                                        <button class="doca-button doca-button--large doca-button--tertiary"
+                                            ng-click="likePost(post.id); $event.stopPropagation();"
+                                            aria-label="Curtir post">
+                                            <i
+                                                class="doca-icon"
+                                                ng-class="post.isLikedByUser ? 'doca-icon__hands doca-icon--solid' : 'doca-icon__hands'"
+                                            ></i>
+                                            <p class="doca-text--large">
+                                                {{ post.post_likes }}
+                                            </p>
+                                        </button>
+                                        <button class="doca-button doca-button--large doca-button--tertiary" aria-label="Comentários">
+                                            <i class="doca-icon doca-icon__comments doca-icon--large"></i>
+                                            <p class="doca-text--large">0</p>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="doca-flex doca-items-center">
+                                    <button class="doca-button doca-button--large doca-button--tertiary" aria-label="Remover">
+                                        <i class="doca-icon doca-icon__circle-minus doca-icon--large"></i>
+                                    </button>
+                                    <button class="doca-button doca-button--large doca-button--tertiary" aria-label="Denunciar">
+                                        <i class="doca-icon doca-icon__flag doca-icon--large"></i>
+                                    </button>
+                                    <button class="doca-button doca-button--large doca-button--tertiary" aria-label="Mais opções">
+                                        <i class="doca-icon doca-icon__ellipsis doca-icon--large"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="doca-flex">
+                            <img alt="{{post.postThumbnail.filename}}" src="../assets/thumbnails/{{post.postThumbnail.filename}}" style="width: 220px; height: 110px;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="posts.length === 0">
+                <p>Não há posts disponíveis no momento. Tente novamente mais tarde!</p>
+            </div>
+        </div>
+    </div>
+</div>

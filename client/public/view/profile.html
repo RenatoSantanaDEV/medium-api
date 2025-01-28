@@ -1,0 +1,55 @@
+<head><title>{{post.title}}</title></head>
+<div ng-show="loading">
+    <span class="loader"></span>
+</div>
+
+<div class="doca" ng-if="!loading">
+    <custom-header user-id="user_id"></custom-header>
+
+    <div class="doca-flex w-1-2 doca-mx-auto">
+        <div class="doca-flex doca-justify-between">
+            <main class="doca-flex doca-flex-col">
+                <div class="doca-flex">
+                    <div class="doca-flex name-ellipsis">
+                        <h2 class="text-transform-capitalize">{{user.username}}</h1>
+                            <button class="doca-button doca-button--large doca-button--tertiary" aria-label="Mais opções">
+                                <i class="doca-icon doca-icon__ellipsis doca-icon--large"></i>
+                            </button>
+                    </div>
+                </div>
+                <div class="doca-flex tabs">
+                    <button class="tabs-itens tabs-active">Home</button>
+                    <button class="tabs-itens">About</button>
+                    <hr class="separator"/>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-img-name-title">
+                            <div class="doca-flex card-img-name">
+                                <i class="doca-icon doca-icon__circle-user doca-icon--solid"></i>
+                                <p class="text-transform-capitalize">{{user.username}}</p>
+                            </div>
+                            <h2>Reading List{{post.title}}</h2>
+                        </div>
+                        <div class="doca-flex">
+                            <div class="doca-flex story-lock">
+                                <p>Your Story</p>
+                                <i class="fa-sharp fa-solid fa-lock"></i>
+                            </div>
+                            <i class="doca-icon doca-icon__ellipsis" style="font-size: 15px;"></i>
+                        </div>
+                     </div>
+                </div>
+            </main>
+            <div class="doca-flex" style="border-left: 1px solid #fafafa;">
+                <div class="doca-flex">
+                    <i class="doca-icon doca-icon__circle-user doca-icon--solid doca-icon--large doca-mt-1" style="margin-right: 5px; font-size: 20px;"></i>
+                    <h3>{{user.username}}</h3>
+                    <a>Edit Profile</a>
+                </div>
+                <div class="footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

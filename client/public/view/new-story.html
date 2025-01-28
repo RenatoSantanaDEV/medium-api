@@ -1,0 +1,147 @@
+<head><title>New story - Amigo Medium</title></head>
+<div ng-show="loading">
+    <span class="loader"></span>
+</div>
+
+<div class="doca" ng-if="!loading">
+    <header class="doca-flex" style="display: flex; border-bottom: 0px solid black; width: 100%;" id="header">
+        <div class="doca-icon" style="margin: 0 350px;">
+            <img src="assets/images/amigo.png" alt="Logo Amigo" style="width: 150px; cursor: pointer;" ui-sref="home"/>
+            <p style="font-family: sans-serif; font-size: 17px; margin-left: 10px; letter-spacing: 0.1px;">Draft in <span class="text-transform-capitalize">{{user.username}}</span></p>
+            <p ng-if="saving" style="font-family: sans-serif; font-size: 15px; margin-left: 20px; color: #7a7a7a;">Saving...</p>
+            <p ng-if="saved" style="font-family: sans-serif; font-size: 15px; margin-left: 20px; color: #7a7a7a;">Saved</p>
+        </div>
+        <div class="doca-button menu-write" style="margin-right: 300px;" >
+            <button class="active-write itens-menu doca-button" ng-class="{ 'text-red' : form.title && form.text }" ng-click="openPublishModal()">Publish</button>
+            <button class="doca-button doca-button--large doca-button--tertiary" aria-label="Mais opções" style="margin-left: 15px; font-size: 20px;">
+                <i class="doca-icon doca-icon__ellipsis doca-icon--large" style="color: #7a7a7a;"></i>
+            </button>
+            <button class="doca-button doca-button doca-button--tertiary" id="bell" style="margin-left: 15px;">
+                <i class="doca-icon doca-icon__bell doca-icon--light"></i>
+            </button>
+
+            <button class="doca-button doca-button doca-button--tertiary" id="profile" ng-click="toggleDropdown()" style="font-size: 22px; margin-left: 0px;">
+                <i class="doca-icon doca-icon__circle-user doca-icon--light"></i>
+            </button>
+        </div>
+    </header>
+    <div class="doca-flex doca-w-1/2 doca-mx-auto" style="padding: 50px;">
+        <div>
+            <div style="display: flex; align-items: center; margin-left: -43px;">
+                <div class="title-label">Title</div>
+                <input class="title-container" ng-change="saveData()"  ng-model="form.title" style="font-size: 50px; font-family: 'GT Super Ds Trial', sans-serif; font-weight: 100; line-height: 40px; padding-left: 10px; padding-top: 10px; width: 700px;" placeholder="Title"></input>
+             </div>
+             <div style="display: flex; align-items: start; margin-left: -43px;">
+                <button class="circle-btn" ng-click="toggleMenu()" ng-class="{'rotate-btn': isMenuOpen}" style="margin-right: 25px; margin-top: 45px;">
+                    <i class="fa-thin fa-times" style="font-size: 21px; padding: 15px; transform: rotate(45deg);"></i>
+                </button>
+                <div class="drop-right" ng-show="isMenuOpen">
+                    <button class="circle-btn"><i class="fa-light fa-image" style="font-size: 15px;" ng-click="triggerFileInput()"></i></button>
+                    <input ng-required="true" onchange="angular.element(this).scope().loadImage(this)" name="file" class="form-control" placeholder="Imagem Url" id="fileTobase64" type="file" accept="image/png, image/jpeg" style="padding-bottom:35px; display: none;">
+                    <button class="circle-btn"><i class="fa fa-file"></i></button>
+                    <button class="circle-btn"><i class="fa-thin fa-play"></i></button>
+                    <button class="circle-btn"><i class="fa-light fa-code"></i></button>
+                    <button class="circle-btn"><i class="fa-light fa-brackets-curly"></i></button>
+                    <button class="circle-btn"><i class="fa-light fa-ellipsis-h" style="border-top: 1px solid green; border-bottom: 1px solid green;"></i></button>
+                </div>
+                <div style="display: block; position: relative; margin: 20px auto;">
+                    <img class="imgFile" ng-src="{{ postData.img }}" style="position: relative; margin: 0px auto;">
+                    <textarea ng-change="saveData()" ng-model="form.text" style="font-size: 25px; margin-top: 24px; line-height: 30px; width: 700px; height: 100vh; font-family: 'GT Super Ds Trial', sans-serif; font-weight: 100;" ng-attr-placeholder="{{ !isMenuOpen ? 'Tell your story...' : '' }}"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="doca-dropdown-menu nav-dropdown-list-new" ng-show="isDropdownVisible" style="top: 8%; right: 12% !important;">
+        <ul class="doca-dropdown__list">
+            <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                Profile
+            </li>
+            <hr
+            class="doca-separator"
+            style="border-color: rgba(77, 77, 77, 0.061); width: 100%;"
+            />
+            <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                Write
+            </li>
+            <hr
+            class="doca-separator"
+            style="border-color: rgba(77, 77, 77, 0.061); width: 100%;"
+            />
+            <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                Profile
+            </li>
+
+            <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                Libary
+            </li>
+            <hr
+            class="doca-separator"
+            style="border-color: rgba(77, 77, 77, 0.061); width: 100%;"
+            />
+            <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                Stats
+            </li>
+            <hr
+            class="doca-separator"
+            style="border-color: rgba(77, 77, 77, 0.061); width: 100%;"
+            />
+            <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                Settings
+            </li>
+            <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                Refine recommendations
+            </li>
+            <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                Manage publications
+            </li>
+            <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">
+                Help
+            </li>
+            <hr
+            class="doca-separator"
+            style="border-color: rgba(77, 77, 77, 0.061); width: 100%;"
+            />
+            <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">Apply to Partner Program</li>
+            <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action">Become a member</li>
+            <hr
+            class="doca-separator"
+            style="border-color: rgba(77, 77, 77, 0.061); width: 100%;"
+            />
+            <li id="dropdownMenu" class="doca-dropdown__list__item doca-dropdown__list__item--action" ng-click="logOut()">
+                Sign out</li>
+        </ul>
+    </div>
+
+        <!-- Modal -->
+        <div class="modal-new-story" ng-show="isModalVisible">
+            <div class="modal-new-story-content">
+              <span class="close-btn" ng-click="closePublishModal()">&times;</span>
+              <div class="story-preview">
+                <h2>Story Preview</h2>
+                <div class="preview-image">
+                  <p style="text-align: center; margin: 0px 80px 0px 80px; font-size: 15px; color: #7a7a7a; letter-spacing: 0.5px; line-height: 25px;">Include a high-quality image in your story to make it more inviting to readers.</p>
+                </div>
+                <input type="text" class="preview-title" placeholder="Write a preview title" style="font-size: 20px; font-weight: 700; margin-bottom: 17px;" ng-model="form.titlePreview">
+                <input type="text" class="preview-subtitle" placeholder="Write a preview subtitle" style="font-size: 15px; margin-bottom: 12px;" ng-model="form.summary">
+                <p class="note" style="line-height: 1px;">
+                  <span style="font-size: 15px; font-weight: 600; color: #7d7d7d;">Note: </span><span style="line-height: 22px; font-size: 15px; font-weight: 100; color: #9a9a9a;">Changes here will affect how your story appears in public places like Medium's homepage and in subscribers' inboxes — not the contents of the story itself.</span>
+                </p>
+              </div>
+              <div class="story-settings">
+                <h3 style="letter-spacing: 1px; font-weight: 100;">Publishing to: <span class="text-transform-capitalize">{{user.username}}</span></h3>
+                <p style="font-size: 15px; letter-spacing: 1px; margin-bottom: 12px;">Add or change topics (up to 5) so readers know what your story is about</p>
+                <input type="text" class="add-topic" placeholder="Add a topic...">
+                <p class="learn-more"><a class="hover" href="https://help.medium.com/hc/en-us/articles/360018677974-What-happens-to-your-post-when-you-publish-on-Medium" target="_blank" style="cursor: pointer; color: #535353; border-bottom: 1px solid #535353;">Learn more</a> about what happens to your post when you publish</p>
+                <div class="auth-warning">
+                  <p>In order to publish, you need to authenticate your account with a phone number first.</p>
+                  <a href="https://medium.com/mobile-verification" target="_blank"  class="active hover" style="padding: 12px 24px !important; font-size: 16px !important; margin-left: 0px !important;">Authenticate account</a>
+                </div>
+                <div class="publish-actions">
+                  <button class="active-write" style="padding: 12px 20px  !important; font-size: 15px !important;" ng-class="{ 'text-red' : form.titlePreview && form.summary }" ng-click="createPost()">Publish now</button>
+                  <button style="font-size: 12px; color: #7a7a7a;">Schedule for later</button>
+                </div>
+              </div>
+            </div>
+          </div>
+</div>

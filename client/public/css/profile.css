@@ -1,0 +1,89 @@
+main {
+    min-width: 730px;
+    max-width: 730px;
+    align-items: start !important;
+    border-right: 1px solid #00000010!important;
+}
+
+.w-1-2 {
+    margin-left: 370px !important;
+    margin-right: 370px !important;
+}
+
+.name-ellipsis {
+    max-width: 680px;
+    width: 680px;
+    margin-top: 80px;
+    margin-bottom: 20px;
+}
+
+.name-ellipsis h2{
+    font-weight: 500 !important;
+    letter-spacing: 1px;
+    font-size: 42px;
+    font-family: sohne, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.name-ellipsis i{
+    font-size: 25px !important;
+    color: #6b6b6b;
+}
+
+.tabs-itens {
+    padding-bottom: 11px !important;
+    margin-right: 15px !important;
+}
+
+.separator {
+    position: absolute;
+    width: 630px;
+    top: 27.6%;
+    color: #00000010 !important;
+}
+
+.tabs {
+    width: 680px;
+    font-size: 15px !important;
+    justify-content: flex-start !important;
+}
+
+.tabs-active {
+    border-bottom: 1px solid black;
+}
+
+.card {
+    width: 680px;
+    max-height: 194px;
+    height: 144px;
+    background-color: #f9f9f9;
+    border: 1px solid #f5f5f5;
+    border-radius: 5px;
+}
+
+.card-content {
+    padding: 30px;
+}
+
+.card-img-name {
+    gap: 2% !important;
+    justify-content: start !important;
+}
+
+.card-img-name i{
+    font-size: 25px !important;
+}
+
+.card-img-name p{
+    font-size: 13px !important;
+}
+
+.card-content h2 {
+    padding-top: 20px;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.story-lock {
+    justify-content: start !important;
+    padding-top: 15px !important;
+}

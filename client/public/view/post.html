@@ -1,0 +1,63 @@
+<head><title>{{post.title}}</title></head>
+<div ng-show="loading">
+    <span class="loader"></span>
+</div>
+
+<div class="doca" ng-if="!loading">
+    <custom-header user-id="user_id"></custom-header>
+    <div class="doca-w-1/3 doca-mx-auto" style="margin-top: 50px;">
+        <div class="doca-card__title">
+            <h1 style="font-family: Georgia, 'Times New Roman', Times, serif; font-weight: 500; font-size: 40px; line-height: 1.5; margin-bottom: 10px;">{{post.title}}</h1>
+            <h3 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif, 'Times New Roman', Times, serif ;font-weight: 400; width: 100%; margin-top: 10px; font-size: 18px; color: #757575;">{{post.summary}}</h3>
+        </div>
+        <div class="author-info">
+            <img
+                class="author-avatar"
+                ng-src="{{ post.imageUrl }}"
+                src="https://via.placeholder.com/150"
+                alt="{{ post.user.username }}"
+            />
+            <div class="author-details">
+                <p class="author-name" style="font-weight: 400; font-size: 13px;">{{ post.user.username }} <span style="margin-left: 10px; font-size: 8px;">&bull;</span><button class="follow" style="color: rgb(15, 151, 15); margin-left: 10px;">Follow</button></p>
+                <p class="meta-info">1 min read <span style="font-size: 10px;">&bull;</span> {{ date | date: 'dd/MM/yyyy' }}</p>
+            </div>
+        </div>
+    </div>
+    <hr class="doca-separator doca-w-1/3 doca-mx-auto"/>
+    <div class="doca-flex doca-w-1/3 doca-mx-auto" style="font-size: 20px;">
+        <div class="doca-ml-2 doca-flex">
+            <button class="doca-button doca-button--large doca-button--tertiary"
+                ng-click="likePost(post.id); $event.stopPropagation();"
+                aria-label="Curtir post">
+                <i
+                    class="doca-icon"
+                    ng-click="likePost(post.id); $event.stopPropagation();"
+                    ng-class="post.isLikedByUser ? 'doca-icon__hands doca-icon--solid' : 'doca-icon__hands'"
+                ></i>
+                <p class="doca-text--large">
+                    {{ post.post_likes }}
+                </p>
+            </button>
+            <button class="doca-button doca-button--large doca-button--tertiary" aria-label="Comentários">
+                <i class="doca-icon doca-icon__comments doca-icon--large"></i>
+                <p class="doca-text--large">0</p>
+            </button>
+        </div>
+        <div class="doca-flex">
+            <button><i class="actions fa-thin fa-circle-bookmark"></i></button>
+            <button><i class="actions fa-thin fa-circle-play"></i></button>
+            <button><i class="actions fa-sharp-duotone fa-thin fa-arrow-up-from-bracket"></i></button>
+            <button class="doca-button doca-button--large doca-button--tertiary" aria-label="Mais opções">
+                <i class="actions doca-icon doca-icon__ellipsis doca-icon--large"></i>
+            </button>
+        </div>
+    </div>
+    <hr class="doca-separator doca-w-1/3 doca-mx-auto"/>
+    <div class="post-body doca-w-1/3 doca-mx-auto doca-flex-col">
+        <div class="doca-flex doca-flex-col" style="margin-bottom: 20px; gap: 5px;">
+            <img alt="{{post.postThumbnail.filename}}" src="../assets/thumbnails/{{post.postThumbnail.filename}}" style="width: 100%; height: 480px; margin: 50px 0px 0px 0px;"/>
+            <p style="font-size: 12px;">Photo by <span class="text-transform-capitalize">{{post.user.username}}</span> released on {{date | date:'MMM d, yyyy'}}</p>
+        </div>
+        <p class="text" style="padding-bottom: 100px;">{{ post.text }}</p>
+    </div>
+</div>
