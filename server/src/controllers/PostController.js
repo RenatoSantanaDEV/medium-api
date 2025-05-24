@@ -21,7 +21,7 @@ class PostController extends BaseController {
 
     async storePost(req, res) {
         try {
-            const data = req.body
+            const data = req.body;
             const newPost = await postService.storePost(data);
             this.handleResponse(res, newPost);
         } catch (e) {
@@ -56,31 +56,31 @@ class PostController extends BaseController {
 
     async indexPost(req, res) {
       try {
-        const posts = await postService.indexPost(); 
+        const posts = await postService.indexPost();
           this.handleResponse(res, posts);
 
       } catch (e) {
           this.handleError(res, 'ERROR');
-          
+
       }
     }
-    
+
     async storePost(req, res) {
       try {
         const newPost = await postService.storePost(req.body);
         this.handleResponse(res, newPost);
-        
+
     } catch (e) {
         this.handleError(res, 'ERROR')
 
         }
     }
-    
+
     async storeLike(req, res) {
       try {
         const newPost = await postService.storeLike(req.params, req.body);
         this.handleResponse(res, newPost);
-        
+
     } catch (e) {
         this.handleError(res, 'ERROR')
 
@@ -94,10 +94,10 @@ class PostController extends BaseController {
 
         } catch (e) {
           this.handleError(res, 'ERROR')
-    
+
         }
       }
-      
+
       async updatePost(req, res) {
         try {
           const updatePost = await postService.updatePost(req.params, req.body);
@@ -105,7 +105,7 @@ class PostController extends BaseController {
 
         } catch (e) {
           this.handleError(res, 'ERROR')
-    
+
         }
       }
 }

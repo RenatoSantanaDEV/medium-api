@@ -1,8 +1,9 @@
 const myApp = angular.module('mediumApp', ["ui.router", "ui.bootstrap"]);
 const baseUrl = "http://localhost:3002/";
 
-myApp.config(function ($stateProvider, $httpProvider) {
+myApp.config(function ($stateProvider, $httpProvider, $urlRouterProvider) {
     $httpProvider.interceptors.push('BearerAuthInterceptor');
+    $urlRouterProvider.otherwise("/");
 
   	$stateProvider
     	.state({

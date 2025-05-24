@@ -1,5 +1,7 @@
 const dotenv = require('dotenv');
 const express = require('express');
+const cors = require('cors');
+
 const userRoutes = require('./src/routes/userRoutes.js');
 const tokenRoutes = require('./src/routes/tokenRoutes.js');
 const postRoutes = require('./src/routes/postRoutes.js');
@@ -17,6 +19,7 @@ class App{
     middlewares() {
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.json());
+        this.app.use(cors());
     }
     routes() {
         this.app.use('/users', userRoutes);

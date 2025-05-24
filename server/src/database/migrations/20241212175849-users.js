@@ -50,10 +50,10 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    const transaction = await queryInterface.sequelize.transaction(); 
+    const transaction = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.dropTable('users', { transaction });
-      await transaction.commit(); 
+      await transaction.commit();
     } catch (error) {
       await transaction.rollback();
       throw error;

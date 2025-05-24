@@ -19,7 +19,7 @@ class TokenController {
             if(!(await user.passwordIsValid(password))){
                 throw new Error('Senha inválida.');
             }
-            
+
             const { id } = user;
 
             const token =  jwt.sign({ id, email }, process.env.TOKEN_SECRET, {
